@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/normalize.css')}}">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300|Playfair+Display&amp;subset=cyrillic" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+  <!--<![endif]-->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+  <script src="{{url_for('static', filename='js/jquery-3.3.1.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/jquery.mask.min.js')}}"></script>
+  <title>ПОЛИКЕК.ICS</title>
+  <script>
+    $(document).ready(function(){
+      $('.group-input').mask('AAA-AAA', {
+        translation: {
+          A: {pattern: /[0-9]/}
+        },
+        onComplete: function(cep) {
+          $('#submit-button').removeClass('pure-button-disabled');
+        },
+        onChange: function(cep){
+          $('#submit-button').addClass('pure-button-disabled');
+        },
+      });
+    })
+  </script>
+</head>
+<body>
+  <div class="pure-g" id="container-1">
+    <div class="pure-u-1-4"></div>
+    <div class="pure-u-1-2 flex-container">
+      <div class="flex-item">
+        <span class="header">Поликек.ics</span>
+      </div>
+      <div class="flex-item">
+        <span class="text">Экспортируй свое уеб****е расписание в календарь</span>
+      </div>
+    </div>
+    <div class="pure-u-1-4"></div>
+  </div>
+  <div class="pure-g" id="container-2">
+
+  </div>
+  <div class="pure-g" id="container-3">
+      <div class="pure-u-1-4"></div>
+      <div class="pure-u-1-2">
+        <form action="{{url_for('.request_ics')}}" method="POST" class="pure-form flex-container">
+          <input type="text" name="group" maxlength="7" class="pure-input-rounded flex-item group-input" placeholder="Номер группы"><br>
+          <button type="submit" class="pure-button button-xsmall flex-item pure-button-disabled" id="submit-button">Дай мне расписание!</button>
+        </form>
+      </div>
+      <div class="pure-u-1-4"></div>
+    </div>
+</body>
+</html>

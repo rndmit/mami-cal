@@ -1,0 +1,47 @@
+html {
+}
+
+.flex-container {
+    min-height: 1em;
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.flex-container:after {
+    display: block;
+    content: "";
+    flex: 999 999 auto;
+}
+
+.flex-item {
+    flex: 1em 0.5em auto;
+    margin: 0.1em;
+}
+
+.header {
+    font-size: 3em;
+    font-family: 'Playfair Display', serif;
+}
+
+.text {
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#container-1 {
+    margin-top: 1em;
+    
+}
+
+h3#container-1 {
+
+}
+
+.group-input {
+    text-align: center;
+}

@@ -1,17 +1,17 @@
 import re
 import requests
 import datetime
+from json.decoder import JSONDecodeError
 
 
 API_DOMAIN = 'https://rasp.dmami.ru/'
-
 
 def get_data(group: str):
     '''Gets the schedule from the server
 
         Args: 
             group: str - defines the student group for which to get the schedule
-        Returns: dict - represents recieved JSON
+        Returns: dict - represents recieved JSON or False if nothing parsed
     '''
 
     cookies = {
@@ -20,7 +20,11 @@ def get_data(group: str):
     }
     headers = {'referer': API_DOMAIN }
     gateway = f'{API_DOMAIN}site/group?group={group}&session=0'
-    return requests.post(gateway, cookies=cookies, headers=headers).json()['grid']
+    try:
+        result = requests.post(gateway, cookies=cookies, headers=headers).json()
+    except JSONDecodeError:
+        return False
+    return result['grid']
 
 
 def get_bpc():

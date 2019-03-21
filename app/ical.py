@@ -1,6 +1,8 @@
+import os
 import arrow
 from datetime import timedelta
 from ics import Calendar, Event
+from flask import current_app as app
 
 
 TIMESTAMP_FORMAT = 'YYYY-MM-DD:HH-mm'
@@ -62,4 +64,4 @@ def save_to_ics(calendar: Calendar, filename: str):
             filename: str
         Returns: None
     '''
-    open('caricular.ics', 'w').writelines(calendar)
+    open(os.path.join(app.config['ICS_STORAGE_FOLDER'], filename), 'w').writelines(calendar)
