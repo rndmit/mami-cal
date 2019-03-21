@@ -1,4 +1,25 @@
-html {
+html{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: black;
+}
+
+.content {
+    flex: 1 0 auto;
+    background-color: white;
+}
+
+footer {
+    flex: 0 0 auto;
+    height: 2em;
+    padding: 1em;
+    text-align: center;
+    background-color: black;
 }
 
 .flex-container {
@@ -24,7 +45,7 @@ html {
 }
 
 .header {
-    font-size: 3em;
+    font-size: 2em;
     font-family: 'Playfair Display', serif;
 }
 
@@ -35,13 +56,18 @@ html {
 
 #container-1 {
     margin-top: 1em;
-    
-}
-
-h3#container-1 {
-
 }
 
 .group-input {
     text-align: center;
+}
+
+span.sign {
+    top: 1em;
+    font-family: 'Montserrat', sans-serif;
+    color: grey;
+}
+
+span.sign > a {
+    color: grey;
 }
