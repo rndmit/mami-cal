@@ -24,8 +24,8 @@ def build(data: dict):
             data (dict) - recieved from rasp.dmami.ru JSON
         Returns: ics.Calendar
     '''
-
     calendar = Calendar()
+    # TODO: Оптимизировать код
     for day in data.keys():
         for lesson in data[day].keys():
             for item in data[day][lesson]:
@@ -35,8 +35,9 @@ def build(data: dict):
                 if len(item['auditories']) == 1:
                     location = item['auditories'][0]['title']
                 else:
-                    for i in item['auditories']:
-                        location += (i['title'])
+                # DEBUG: Разбиение нескольких аудиторий через "," (505506) --> (505,506)
+                    location = ','.join(i['title'] for i in item['auditories'])
+
 
                 # Формируем таймстэмпы начала и конца текущей дисциплины с учетом времени начала пары
                 df = arrow.get(item['date_from'] + ':' + LESSON_TIME[lesson], TIMESTAMP_FORMAT).replace(days=(int(day) - 1))
