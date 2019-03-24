@@ -26,35 +26,27 @@ def build(data: dict):
     '''
     calendar = Calendar()
     # TODO: Оптимизировать код
-    for day in data.keys():
-        for lesson in data[day].keys():
-            for item in data[day][lesson]:
-
-                # Если аудиторий несколько - собираем их в одну строку
-                location = str()
-                if len(item['auditories']) == 1:
-                    location = item['auditories'][0]['title']
-                else:
-                # DEBUG: Разбиение нескольких аудиторий через "," (505506) --> (505,506)
-                    location = ','.join(i['title'] for i in item['auditories'])
-
-
+    for day in range(1, len(data)+1): #Проходим по каждому дню недели [1,6]
+        for pair in range(1, len(data['day'])+1): # проходим по каждой паре
+            pairs = data[str(day)][str(pair)]
+            if len(pairs) > 0:
+                # Собираем аудитории в location
+                object_1 = pairs[0] # Содержит 1 элемент json`a
+                location = ','.join(i['title'] for i in object_1['auditories'])
                 # Формируем таймстэмпы начала и конца текущей дисциплины с учетом времени начала пары
-                df = arrow.get(item['date_from'] + ':' + LESSON_TIME[lesson], TIMESTAMP_FORMAT).replace(days=(int(day) - 1))
+                df = arrow.get(object_1['date_from'] + ':' + LESSON_TIME[str(pair)], TIMESTAMP_FORMAT).replace(days=(int(day) - 1))
                 print(df)
-                dt = arrow.get(item['date_to'] + ':' + LESSON_TIME[lesson], TIMESTAMP_FORMAT)
-
+                dt = arrow.get(object_1['date_to'] + ':' + LESSON_TIME[str(pair)], TIMESTAMP_FORMAT)
                 # Проходим по всем числам от начала до конца с интервалом в неделю
                 for r in arrow.Arrow.range('week', df, dt):
                     # Формируем событие и сразу добавляем его в календарь
                     calendar.events.add(Event(
-                        name=item['subject'],
+                        name=object_1['subject'],
                         begin=r.replace(tzinfo=TIMEZONE),
                         duration=timedelta(minutes=90),
                         location=location,
-                        description='Преподаватель: ' + item['teacher']
+                        description='Преподаватель: ' + object_1['teacher']
                     ))
-
     return calendar
 
 def save_to_ics(calendar: Calendar, filename: str):
