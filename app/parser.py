@@ -36,3 +36,6 @@ def get_bpc():
 
     responce = requests.get(API_DOMAIN).text
     return re.search(r'(?<=bpc\=).*(?=\;Path)', responce).group(0)
+
+if __name__ == "__main__":
+    print(get_data('181-009'))

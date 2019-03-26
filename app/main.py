@@ -9,7 +9,11 @@ bp = Blueprint('main', __name__, url_prefix='/', static_folder='/static')
 
 @bp.route('/')
 def index():
-    return render_template('index.html')
+   try:  
+      return render_template('index.html')
+   except AttributeError:
+      g.error = None
+      return redirect('/')
 
 @bp.route('/request-ics', methods=['POST'])
 def request_ics():
