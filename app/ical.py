@@ -45,7 +45,7 @@ def build(data: dict):
                         begin=r.replace(tzinfo=TIMEZONE),
                         duration=timedelta(minutes=90),
                         location=location,
-                        description='Преподаватель: ' + object_1['teacher']
+                        description=object_1['type']+'\n\nПреподаватель: ' + object_1['teacher']
                     ))
     return calendar
 
