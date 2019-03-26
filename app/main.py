@@ -21,11 +21,8 @@ def request_ics():
       target = request.form['group']
       result = parser.get_data(target)
       if result:
-         ical.save_to_ics(ical.build(result), f'{target}.ics')
-         return redirect(f'/download-ics/{target}.ics')
-      else:
-         g.error = 'Такой группы нет'
-         return redirect('/')
+        ical.save_to_ics(ical.build(result), f'{target}.ics')
+   return redirect(f'/download-ics/{target}.ics')
 
 @bp.route('/download-ics/<path:filename>')
 def download_ics(filename):
