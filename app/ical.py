@@ -27,7 +27,7 @@ def build(data: dict):
     calendar = Calendar()
     # TODO: Оптимизировать код
     for day in range(1, len(data)+1): #Проходим по каждому дню недели [1,6]
-        for pair in range(1, len(data['day'])+1): # проходим по каждой паре
+        for pair in range(1, len(data[str(day)])): # проходим по каждой паре
             pairs = data[str(day)][str(pair)]
             if len(pairs) > 0:
                 # Собираем аудитории в location
