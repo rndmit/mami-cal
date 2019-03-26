@@ -1,5 +1,6 @@
-pip install -r requirements.rxt
-export APP_CONFIG=config.Config
+**Installation:** 
+    pip install -r requirements.rxt
+    export APP_CONFIG=config.Config
 
-Contributors:
-@AlanLatte
+**Contributors:**
+[@AlanLatte](https://github.com/AlanLatte)
