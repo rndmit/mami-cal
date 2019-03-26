@@ -9,7 +9,11 @@ bp = Blueprint('main', __name__, url_prefix='/', static_folder='/static')
 
 @bp.route('/')
 def index():
-    return render_template('index.html')
+   try:  
+      return render_template('index.html')
+   except AttributeError:
+      g.error = None
+      return redirect('/')
 
 @bp.route('/request-ics', methods=['POST'])
 def request_ics():
@@ -18,7 +22,10 @@ def request_ics():
       result = parser.get_data(target)
       if result:
          ical.save_to_ics(ical.build(result), f'{target}.ics')
-   return redirect(f'/download-ics/{target}.ics')
+         return redirect(f'/download-ics/{target}.ics')
+      else:
+         g.error = 'Такой группы нет'
+         return redirect('/')
 
 @bp.route('/download-ics/<path:filename>')
 def download_ics(filename):
