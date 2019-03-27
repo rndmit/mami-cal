@@ -31,12 +31,14 @@ def build(data: dict):
     '''
     calendar = Calendar()
     for day in data.items():                                                            # Проходим по каждому дню недели
+        day_num = int(day[KEY])
         for lesson in day[DATA].items():                                                   # Проходим по каждой паре
+            lesson_num = str(lesson[KEY])
             for item in lesson[DATA]:
 
                 # Формируем таймстэмпы начала и конца текущей дисциплины с учетом времени начала пары
-                df = arrow.get(item['date_from'] + ':' + LESSON_TIME[str(lesson[KEY])], TIMESTAMP_FORMAT).replace(days=(int(day[KEY]) - 1))
-                dt = arrow.get(item['date_to'] + ':' + LESSON_TIME[str(lesson[KEY])], TIMESTAMP_FORMAT)
+                df = arrow.get(item['date_from'] + ':' + LESSON_TIME[lesson_num], TIMESTAMP_FORMAT).replace(days=(day_num - 1))
+                dt = arrow.get(item['date_to'] + ':' + LESSON_TIME[lesson_num], TIMESTAMP_FORMAT)
 
                 # Проходим по всем числам от начала до конца с интервалом в неделю
                 for r in arrow.Arrow.range('week', df, dt):
