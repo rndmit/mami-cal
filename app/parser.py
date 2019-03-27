@@ -20,11 +20,13 @@ def get_data(group: str):
     }
     headers = {'referer': API_DOMAIN }
     gateway = f'{API_DOMAIN}site/group?group={group}&session=0'
+    result = requests.post(gateway, cookies=cookies, headers=headers)
     try:
-        result = requests.post(gateway, cookies=cookies, headers=headers).json()
+        data = result.json()['grid']
     except JSONDecodeError:
         return False
-    return result['grid']
+    else:
+        return data
 
 
 def get_bpc():
@@ -37,5 +39,5 @@ def get_bpc():
     responce = requests.get(API_DOMAIN).text
     return re.search(r'(?<=bpc\=).*(?=\;Path)', responce).group(0)
 
-if __name__ == "__main__":
-    print(get_data('181-009'))
+if __name__ == '__main__':
+    print(get_data('181-362'))
