@@ -3,7 +3,6 @@ import arrow
 from datetime import timedelta
 from ics import Calendar, Event
 from flask import current_app as app
-import parser
 
 
 TIMESTAMP_FORMAT = 'YYYY-MM-DD:HH-mm'
@@ -23,11 +22,10 @@ KEY = 0
 DATA = 1
 
 def build(data: dict):
-    '''Builds an calendar from the dictionary
+    '''Builds a calendar from the dictionary
 
-        Args:
-            data (dict) - recieved from rasp.dmami.ru JSON
-        Returns: ics.Calendar
+    Keyword arguments:
+    data -- recieved from rasp.dmami.ru JSON
     '''
     calendar = Calendar()
     for day in data.items():                                                            # Проходим по каждому дню недели
@@ -55,9 +53,9 @@ def build(data: dict):
 def save_to_ics(calendar: Calendar, filename: str):
     '''Saves calendar to ics-file with the specified name
 
-        Args:
-            calendar: ics.Calendar - calendar object which should be saved to a file
-            filename: str
-        Returns: None
+    Keyword arguments:
+    calendar -- Calendar object which must be saved into ics
+    filename -- name without '.ics'
     '''
-    open(os.path.join(app.config['ICS_STORAGE_FOLDER'], filename), 'w').writelines(calendar)
+    with open(os.path.join(app.config['ICS_STORAGE_FOLDER'], filename), 'w') as file:
+        file.writelines(calendar)
