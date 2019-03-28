@@ -17,3 +17,4 @@ build/
 run.py
 
 .DC_Store
+.DS_Store
